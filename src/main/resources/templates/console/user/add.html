@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{console/layout/layout}">
+<body>
+<div layout:fragment="content">
+	<!-- BEGIN PAGE BASE CONTENT -->
+	<!-- 表单 -->
+	<div class="row">
+		<div class="col-md-12">
+			<!-- BEGIN EXAMPLE TABLE PORTLET-->
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption font-dark">
+						<i class="icon-settings font-dark"></i>
+						<span class="caption-subject bold uppercase"> 增加</span>
+					</div>
+					<div class="tools">
+						<a href="javascript:" class="collapse"></a>
+					</div>
+					<div class="actions">
+						<a class="btn dark btn-outline btn-circle"
+						   th:href="@{/console/user/list}">
+							<i class="fa fa-share"></i>
+							<span class="hidden-xs"> 返回列表 </span>
+						</a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<!-- BEGIN FORM-->
+					<form method="post" th:object="${user}" id="form1" class="form-horizontal"
+					      th:action="@{/console/user/add}">
+						<div class="form-body">
+							<div class="alert alert-danger display-hide">
+								<button class="close" data-close="alert"></button>
+								你的表单有一些错误,请检查!
+							</div>
+							<div class="alert alert-success display-hide">
+								<button class="close" data-close="alert"></button>
+								你的表单验证通过!
+							</div>
+
+							<div class="form-group">
+								<label class="control-label col-md-3">姓名
+									<span class="required"> * </span>
+								</label>
+								<div class="col-md-4">
+									<input th:field="*{name}" class="form-control" th:placeholder="姓名"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">密码
+									<span class="required"> * </span>
+								</label>
+								<div class="col-md-4">
+									<input th:field="*{password}" class="form-control" th:placeholder="密码"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">昵称
+									<span class="required"> * </span>
+								</label>
+								<div class="col-md-4">
+									<input th:field="*{nickname}" class="form-control" th:placeholder="昵称"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">状态
+									<span class="required"> * </span>
+								</label>
+								<div class="col-md-4">
+									<select th:field="*{status}" class="form-control">
+										<option value="0">正常</option>
+										<option value="1">锁定</option>
+									</select>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="form-actions">
+							<div class="row">
+								<div class="col-md-offset-3 col-md-9">
+									<button type="submit" class="btn blue">
+										<i class="fa fa-plus"></i>
+										新增
+									</button>
+									<a class="btn default"
+									   th:href="@{/console/user/list}">
+										<i class="fa fa-share"></i>
+										返回列表
+									</a>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- END FORM-->
+				</div>
+			</div>
+			<!-- END EXAMPLE TABLE PORTLET-->
+		</div>
+	</div>
+	<!-- END PAGE BASE CONTENT -->
+</div>
+</body>
+<div layout:fragment="myScript">
+	<script>
+		jQuery(document).ready(function () {
+			initMenuAndTitle();
+			handleValidation();
+		});
+		/**
+		 * 初始化标题
+		 */
+		function initMenuAndTitle() {
+			//menu
+			$('#menu_li_user').addClass("active open");
+			$('#menu_sub_li_user').addClass("active");
+			//title
+			$('#page_title_1').html('系统数据');
+			$('#page_title_2').html('系统设置');
+			$('#page_title_3').html('账户管理');
+		}
+
+		/**
+		 * 表单验证 validation
+		 */
+		function handleValidation() {
+			// for more info visit the official plugin documentation:
+			// http://docs.jquery.com/Plugins/Validation
+			var form1 = $('#form1'), r = $(".alert-danger", form1), i = $(".alert-success", form1);
+			form1.validate({
+				errorElement: 'span', //default input error message container
+				errorClass: 'help-block help-block-error', // default input error message class
+				focusInvalid: false, // do not focus the last invalid input
+				ignore: "", // validate all fields including form hidden input
+				rules: {
+					name: {
+						required: true
+					},
+					password: {
+						required: true
+					},
+					nickname: {
+						required: true
+					},
+					status: {
+						required: true
+					}
+				},
+
+				messages: { // custom messages for radio buttons and checkboxes
+					name: {
+						required: "用户名必填"
+					},
+					password: {
+						required: "密码必填"
+					},
+					nickname: {
+						required: "昵称必填"
+					},
+					status: {
+						required: "状态必填"
+					}
+				},
+
+				errorPlacement: function (error, element) { // render error placement for each input type
+					if (element.parent(".input-group").size() > 0) {
+						error.insertAfter(element.parent(".input-group"));
+					} else if (element.attr("data-error-container")) {
+						error.appendTo(element.attr("data-error-container"));
+					} else if (element.parents('.radio-list').size() > 0) {
+						error.appendTo(element.parents('.radio-list').attr("data-error-container"));
+					} else if (element.parents('.radio-inline').size() > 0) {
+						error.appendTo(element.parents('.radio-inline').attr("data-error-container"));
+					} else if (element.parents('.checkbox-list').size() > 0) {
+						error.appendTo(element.parents('.checkbox-list').attr("data-error-container"));
+					} else if (element.parents('.checkbox-inline').size() > 0) {
+						error.appendTo(element.parents('.checkbox-inline').attr("data-error-container"));
+					} else {
+						error.insertAfter(element); // for other inputs, just perform default behavior
+					}
+				},
+
+				invalidHandler: function (e, t) {
+					i.hide();
+					r.show();
+					App.scrollTo(r, -200);
+				},
+				highlight: function (e) {
+					$(e).closest(".form-group").addClass("has-error")
+				},
+				unhighlight: function (e) {
+					$(e).closest(".form-group").removeClass("has-error")
+				},
+				success: function (e) {
+					e.closest(".form-group").removeClass("has-error")
+				},
+				submitHandler: function (e) {
+					i.show();
+					r.hide();
+					var options = {
+						success: showResponse, //处理完成
+						clearForm: true,
+						dataType: 'json'
+					};
+					form1.ajaxSubmit(options);
+				}
+			});
+		}
+
+		/**
+		 * ajaxForm的回调函数:提交成功之后
+		 */
+		function showResponse(responseText, statusText) {
+			if (statusText == 'success') {
+				alert(responseText.message);
+			}
+		}
+	</script>
+</div>
+</html>

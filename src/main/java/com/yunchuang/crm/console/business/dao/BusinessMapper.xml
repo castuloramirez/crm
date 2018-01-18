@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunchuang.crm.console.business.dao.IBusinessDao" >
+  <resultMap id="BaseResultMap" type="com.yunchuang.crm.console.business.model.Business" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="CUSTOMERNO" property="customerNo" jdbcType="VARCHAR" />
+    <result column="BUSINESSNO" property="businessNo" jdbcType="VARCHAR" />
+    <result column="YEAR" property="year" jdbcType="INTEGER" />
+    <result column="ANNUALINCOME" property="annualIncome" jdbcType="DECIMAL" />
+    <result column="ANNUALPROFIT" property="annualProfit" jdbcType="DECIMAL" />
+    <result column="PROFITMARGIN" property="profitMargin" jdbcType="DECIMAL" />
+    <result column="NUMBEROFEMPLOYEES" property="numberOfEmployees" jdbcType="INTEGER" />
+  </resultMap>
+
+</mapper>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunchuang.crm.console.user.dao.IUserDao">
+	<resultMap id="BaseResultMap" type="com.yunchuang.crm.console.user.domain.User">
+		<!-- 1.主键 -->
+		<id column="ID" property="id" jdbcType="INTEGER" />
+		<!-- 2.用户名 -->
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<!-- 3.密码 -->
+		<result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+		<!-- 4.昵称 -->
+		<result column="NICKNAME" property="nickname" jdbcType="VARCHAR" />
+		<!-- 5.状态:锁定是1,否则是0. -->
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+	</resultMap>
+
+	<!-- 1.增加后台管理员信息 -->
+	<insert id="add" parameterType="com.yunchuang.crm.console.user.domain.User">
+		insert into crm_user values
+		(crm_user_seq.nextval,
+		#{name},
+		#{password},
+		#{nickname},
+		#{status})
+	</insert>
+
+	<!-- 2.更改后台管理员信息 -->
+	<update id="update" parameterType="com.yunchuang.crm.console.user.domain.User">
+		update crm_user set
+		name=#{name},
+		<if test="password != null || password != ''">
+			password=#{password},
+		</if>
+		nickname=#{nickname},
+		status=#{status}
+		where id=#{id}
+	</update>
+
+	<!-- 3.删除后台管理员信息 -->
+	<delete id="delete" parameterType="java.util.Arrays">
+		DELETE FROM crm_user where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- 4.读取全部后台管理员信息 -->
+	<select id="list" resultMap="BaseResultMap">
+		select * from crm_user order by id
+	</select>
+
+	<!-- 5.分页读后台管理员信息 -->
+	<select id="find" resultMap="BaseResultMap">
+	<![CDATA[
+    select *
+      from (select ab.*, ROWNUM RN
+              from (select * from crm_user order by id) ab
+             where ROWNUM <= (#{max}))
+     WHERE RN >= (#{min})
+     ]]>
+	</select>
+
+	<!-- 6.根据ID查找后台管理员信息 -->
+	<select id="loadById" resultMap="BaseResultMap">
+		select * from crm_user where id=#{id}
+	</select>
+
+	<!-- 7.查询所有后台管理员信息数量 -->
+	<select id="count" resultType="int">
+		select count(*) from crm_user
+	</select>
+
+	<!-- 8.根据用户名和密码读取用户信息 -->
+	<select id="loadByNamePassword" resultMap="BaseResultMap">
+		select * from crm_user
+		where name=#{name} and password=#{password}
+		and status=0
+	</select>
+	
+	<!-- 9.根据用户名读取用户信息 -->
+	<select id="loadByName" resultMap="BaseResultMap">
+		select * from crm_user
+		where name=#{name}
+	</select>
+
+</mapper>

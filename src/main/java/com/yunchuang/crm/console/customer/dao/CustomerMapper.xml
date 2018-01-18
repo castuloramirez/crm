@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yunchuang.crm.console.customer.dao.ICustomerDao">
+	<resultMap id="BaseResultMap" type="com.yunchuang.crm.console.customer.model.Customer">
+		<id column="ID" property="id" jdbcType="INTEGER"/>
+		<result column="CUSTOMERNO" property="customerNo" jdbcType="VARCHAR"/>
+		<result column="CUSTOMERNAME" property="customerName" jdbcType="VARCHAR"/>
+		<result column="AREA" property="area" jdbcType="VARCHAR"/>
+		<result column="PROVINCE" property="province" jdbcType="VARCHAR"/>
+		<result column="CITY" property="city" jdbcType="VARCHAR"/>
+		<result column="COUNTY" property="county" jdbcType="VARCHAR"/>
+		<result column="POSTALADDRESS" property="postalAddress" jdbcType="VARCHAR"/>
+		<result column="INDUSTRYCLASSIFICATION" property="industryClassification" jdbcType="VARCHAR"/>
+		<result column="BUSINESSCATEGORY" property="businessCategory" jdbcType="VARCHAR"/>
+		<result column="LEGALPERSON" property="legalPerson" jdbcType="VARCHAR"/>
+		<result column="ENTERPRISECONTACTPHONE" property="enterpriseContactPhone" jdbcType="VARCHAR"/>
+		<result column="longitude" property="longitude" jdbcType="DECIMAL"/>
+		<result column="latitude" property="latitude" jdbcType="DECIMAL"/>
+	</resultMap>
+
+
+	<!-- 1.增加 -->
+	<insert id="add" parameterType="com.yunchuang.crm.console.customer.model.Customer">
+		INSERT INTO crm_customer VALUES
+		(crm_customer_seq.nextval,
+		#{customerNo,jdbcType=VARCHAR},
+		#{customerName,jdbcType=VARCHAR},
+		#{area,jdbcType=VARCHAR},
+		#{province,jdbcType=VARCHAR},
+		#{city,jdbcType=VARCHAR},
+		#{county,jdbcType=VARCHAR},
+		#{postalAddress,jdbcType=VARCHAR},
+		#{industryClassification,jdbcType=VARCHAR},
+		#{businessCategory,jdbcType=VARCHAR},
+		#{legalPerson,jdbcType=VARCHAR},
+		#{enterpriseContactPhone,jdbcType=VARCHAR},
+		#{longitude,jdbcType=DECIMAL},
+		#{latitude,jdbcType=DECIMAL}
+		)
+	</insert>
+
+	<!-- 2.更改 -->
+	<update id="update" parameterType="com.yunchuang.crm.console.customer.model.Customer">
+		UPDATE crm_customer SET
+		customerNo=#{customerNo,jdbcType=VARCHAR},
+		customerName=#{customerName,jdbcType=VARCHAR},
+		area=#{area,jdbcType=VARCHAR},
+		province=#{province,jdbcType=VARCHAR},
+		city=#{city,jdbcType=VARCHAR},
+		county=#{county,jdbcType=VARCHAR},
+		postalAddress=#{postalAddress,jdbcType=VARCHAR},
+		industryClassification=#{industryClassification,jdbcType=VARCHAR},
+		businessCategory=#{businessCategory,jdbcType=VARCHAR},
+		legalPerson=#{legalPerson,jdbcType=VARCHAR},
+		enterpriseContactPhone=#{enterpriseContactPhone,jdbcType=VARCHAR},
+		longitude=#{longitude,jdbcType=DECIMAL},
+		latitude=#{latitude,jdbcType=DECIMAL}
+		WHERE id=#{id}
+	</update>
+
+	<!-- 3.删除 -->
+	<delete id="delete" parameterType="java.util.Arrays">
+		DELETE FROM crm_customer where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<!-- 4.读取列表 -->
+	<select id="list" resultMap="BaseResultMap">
+		SELECT * FROM crm_customer ORDER BY id
+	</select>
+
+	<!-- 5.根据ID查找 -->
+	<select id="loadById" resultMap="BaseResultMap">
+		SELECT * FROM crm_customer WHERE id=#{id}
+	</select>
+
+	<!-- 6.查询所有数量 -->
+	<select id="count" resultType="int">
+		SELECT count(*) FROM crm_customer
+	</select>
+
+	<!-- 7.控制台分页读 -->
+	<select id="findByConsole" resultMap="BaseResultMap">
+		<![CDATA[
+			SELECT *
+				FROM (SELECT ab.*, ROWNUM RN
+					FROM (SELECT * FROM crm_customer ORDER BY id DESC) ab
+						WHERE ROWNUM <= (#{max}))
+			WHERE RN >= (#{min})
+		]]>
+	</select>
+
+	<!-- 8.清除表,不支持回滚 -->
+	<select id="truncateAll" resultMap="BaseResultMap">
+		TRUNCATE TABLE crm_customer
+	</select>
+</mapper>

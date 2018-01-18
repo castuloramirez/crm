@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorate="~{console/layout/layout}">
+<body>
+<div layout:fragment="content">
+	<!-- BEGIN PAGE BASE CONTENT -->
+	<!-- BEGIN DASHBOARD STATS 1-->
+	<div class="row">
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+				<div class="visual">
+					<i class="fa fa-comments"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+						<span data-counter="counterup" th:attr="data-value=${peoples}">0</span>人
+					</div>
+					<div class="desc"> CRM圈子人数</div>
+				</div>
+			</a>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 red" href="#">
+				<div class="visual">
+					<i class="fa fa-bar-chart-o"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+						<span data-counter="counterup" th:attr="data-value=${other}">0</span>个
+					</div>
+					<div class="desc"> 其他圈子人数</div>
+				</div>
+			</a>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 green" href="#">
+				<div class="visual">
+					<i class="fa fa-shopping-cart"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+						<span data-counter="counterup" th:attr="data-value=${countTodo}">0</span>个
+					</div>
+					<div class="desc"> 订机票审批中流程数</div>
+				</div>
+			</a>
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+			<a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+				<div class="visual">
+					<i class="fa fa-globe"></i>
+				</div>
+				<div class="details">
+					<div class="number">
+						<span data-counter="counterup" th:attr="data-value=${countFinished}">0</span>个
+					</div>
+					<div class="desc"> 订机票已结束流程数</div>
+				</div>
+			</a>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<!-- END DASHBOARD STATS 1-->
+
+	<div class="row">
+		<div class="col-md-12">
+			<!-- BEGIN EXAMPLE TABLE PORTLET-->
+			<div class="portlet light bordered">
+				<div class="portlet-title">
+					<div class="caption font-dark">
+						<i class="icon-settings font-dark"></i>
+						<span class="caption-subject bold uppercase"> 人员对应表</span>
+					</div>
+					<div class="tools">
+						<a href="javascript:" class="collapse"> </a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<table class="table table-striped table-bordered table-hover table-checkable order-column"
+					       id="sample_1">
+						<thead>
+						<tr>
+							<th width="2%">
+								<label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+									<input type="checkbox" class="group-checkable"
+									       data-set="#sample_1 .checkboxes"/>
+									<span></span>
+								</label>
+							</th>
+							<th>ID</th>
+							<th>openid</th>
+							<th>工号</th>
+							<th>名字</th>
+							<th>团队</th>
+							<th>部门</th>
+							<th>权限</th>
+							<th>角色</th>
+							<th>操作</th>
+						</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- END EXAMPLE TABLE PORTLET-->
+		</div>
+	</div>
+
+	<div class="m-heading-1 border-green m-bordered">
+		<h4 class="alert-heading">事项说明:</h4>
+		<p>首页</p>
+	</div>
+	<!-- END PAGE BASE CONTENT -->
+</div>
+</body>
+<div layout:fragment="myScript">
+	<script>
+		jQuery(document).ready(function () {
+			initMenuAndTitle();
+		});
+		function initMenuAndTitle() {
+			//menu
+			$('#menu_li_index').addClass("active");
+			//title
+			$('.page-breadcrumb').hide();
+			$('#page_title_3').html('首页');
+		}
+	</script>
+</div>
+</html>
