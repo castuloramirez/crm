@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yunchuang.crm.console.contact.dao.ContactMapper" >
+<mapper namespace="com.yunchuang.crm.console.contact.dao.IContactDao" >
   <resultMap id="BaseResultMap" type="com.yunchuang.crm.console.contact.model.Contact" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="CUSTOMERNO" property="customerNo" jdbcType="VARCHAR" />
@@ -15,4 +15,81 @@
     <result column="DETAILEDADDRESS" property="detailedAddress" jdbcType="VARCHAR" />
   </resultMap>
 
+  <!-- 1.增加 -->
+  <insert id="add" parameterType="com.yunchuang.crm.console.contact.model.Contact">
+    INSERT INTO crm_contact VALUES
+    (crm_contact_seq.nextval,
+    #{customerNo,jdbcType=VARCHAR},
+    #{contactNo,jdbcType=VARCHAR},
+    #{contactName,jdbcType=VARCHAR},
+    #{position,jdbcType=VARCHAR},
+    #{fixedTelephone,jdbcType=VARCHAR},
+    #{mobilePhone,jdbcType=VARCHAR},
+    #{email,jdbcType=VARCHAR},
+    #{qq,jdbcType=VARCHAR},
+    #{fax,jdbcType=VARCHAR},
+    #{detailedAddress,jdbcType=VARCHAR}
+    )
+  </insert>
+
+  <!-- 2.更改 -->
+  <update id="update" parameterType="com.yunchuang.crm.console.contact.model.Contact">
+    UPDATE crm_contact SET
+    customerNo=#{customerNo,jdbcType=VARCHAR},
+    contactNo=#{contactNo,jdbcType=VARCHAR},
+    contactName=#{contactName,jdbcType=VARCHAR},
+    position=#{position,jdbcType=VARCHAR},
+    fixedTelephone=#{fixedTelephone,jdbcType=VARCHAR},
+    mobilePhone=#{mobilePhone,jdbcType=VARCHAR},
+    email=#{email,jdbcType=VARCHAR},
+    qq=#{qq,jdbcType=VARCHAR},
+    fax=#{fax,jdbcType=VARCHAR},
+    detailedAddress=#{detailedAddress,jdbcType=VARCHAR}
+    WHERE id=#{id}
+  </update>
+
+  <!-- 3.删除 -->
+  <delete id="delete" parameterType="java.util.Arrays">
+    DELETE FROM crm_contact where id in
+    <foreach item="id" collection="array" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <!-- 4.读取列表 -->
+  <select id="list" resultMap="BaseResultMap">
+    SELECT * FROM crm_contact ORDER BY id
+  </select>
+
+  <!-- 5.根据ID查找 -->
+  <select id="loadByContactNo" resultMap="BaseResultMap">
+    SELECT * FROM crm_contact WHERE contactNo=#{contactNo}
+  </select>
+
+  <!-- 5.根据ID查找 -->
+  <select id="loadById" resultMap="BaseResultMap">
+    SELECT * FROM crm_contact WHERE id=#{id}
+  </select>
+
+  <!-- 6.查询所有数量 -->
+  <select id="count" resultType="int">
+    SELECT count(*) FROM crm_contact
+  </select>
+
+  <!-- 7.控制台分页读 -->
+  <select id="findByConsole" resultMap="BaseResultMap">
+    <![CDATA[
+			SELECT *
+				FROM (SELECT ab.*, ROWNUM RN
+					FROM (SELECT * FROM crm_contact WHERE customerNo=#{customerNo} ORDER BY id DESC) ab
+						WHERE ROWNUM <= (#{max}))
+			WHERE RN >= (#{min})
+		]]>
+  </select>
+
+  <!-- 8.清除表,不支持回滚 -->
+  <select id="truncateAll" resultMap="BaseResultMap">
+    TRUNCATE TABLE crm_contact
+  </select>
+  
 </mapper>

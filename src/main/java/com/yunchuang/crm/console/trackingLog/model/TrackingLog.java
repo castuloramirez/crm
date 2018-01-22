@@ -15,35 +15,31 @@ public class TrackingLog {
 	 */
 	private String trackingLogNo;
 	/**
-	 * 3.客户编号
-	 */
-	private String customerNo;
-	/**
-	 * 4.项目编号
+	 * 3.项目编号
 	 */
 	private String projectNo;
 	/**
-	 * 5.日期
+	 * 4.日期
 	 */
 	private String createTime;
 	/**
-	 * 6.标题
+	 * 5.标题
 	 */
 	private String title;
 	/**
-	 * 7.内容
+	 * 6.内容
 	 */
 	private String content;
 	/**
-	 * 8.创建人openid
+	 * 7.创建人openid
 	 */
 	private String founderOpenid;
 	/**
-	 * 9.创建人名字
+	 * 8.创建人名字
 	 */
 	private String founderName;
 	/**
-	 * 10.创建人头像
+	 * 9.创建人头像
 	 */
 	private String founderImage;
 
@@ -61,14 +57,6 @@ public class TrackingLog {
 
 	public void setTrackingLogNo(String trackingLogNo) {
 		this.trackingLogNo = trackingLogNo == null ? null : trackingLogNo.trim();
-	}
-
-	public String getCustomerNo() {
-		return customerNo;
-	}
-
-	public void setCustomerNo(String customerNo) {
-		this.customerNo = customerNo == null ? null : customerNo.trim();
 	}
 
 	public String getProjectNo() {
@@ -132,7 +120,6 @@ public class TrackingLog {
 		return "TrackingLog{" +
 				"id=" + id +
 				", trackingLogNo='" + trackingLogNo + '\'' +
-				", customerNo='" + customerNo + '\'' +
 				", projectNo='" + projectNo + '\'' +
 				", createTime='" + createTime + '\'' +
 				", title='" + title + '\'' +

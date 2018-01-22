@@ -4,7 +4,6 @@
   <resultMap id="BaseResultMap" type="com.yunchuang.crm.console.trackingLog.model.TrackingLog" >
     <id column="ID" property="id" jdbcType="INTEGER" />
     <result column="TRACKINGLOGNO" property="trackingLogNo" jdbcType="VARCHAR" />
-    <result column="CUSTOMERNO" property="customerNo" jdbcType="VARCHAR" />
     <result column="PROJECTNO" property="projectNo" jdbcType="VARCHAR" />
     <result column="CREATETIME" property="createTime" jdbcType="VARCHAR" />
     <result column="TITLE" property="title" jdbcType="VARCHAR" />
@@ -19,7 +18,6 @@
     INSERT INTO crm_trackinglog VALUES
     (crm_trackinglog_seq.nextval,
     #{trackingLogNo,jdbcType=VARCHAR},
-    #{customerNo,jdbcType=VARCHAR},
     #{projectNo,jdbcType=VARCHAR},
     #{createTime,jdbcType=VARCHAR},
     #{title,jdbcType=VARCHAR},
@@ -34,7 +32,6 @@
   <update id="update" parameterType="com.yunchuang.crm.console.trackingLog.model.TrackingLog">
     UPDATE crm_trackinglog SET
     trackingLogNo=#{trackingLogNo,jdbcType=VARCHAR},
-    customerNo=#{customerNo,jdbcType=VARCHAR},
     projectNo=#{projectNo,jdbcType=VARCHAR},
     createTime=#{createTime,jdbcType=VARCHAR},
     title=#{title,jdbcType=VARCHAR},

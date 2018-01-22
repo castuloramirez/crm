@@ -36,6 +36,7 @@ public class TrackingLogServiceImpl implements ITrackingLogService {
 	private ITrackingLogDao trackingLogDao;
 	@Resource
 	private SqlSessionFactory masterSqlSessionFactory;
+
 	/**
 	 * 1.下载模版
 	 *
@@ -108,35 +109,31 @@ public class TrackingLogServiceImpl implements ITrackingLogService {
 						MyUtils.setExcelCellValue(cell, trackingLog.getTrackingLogNo());
 						break;
 					case 1:
-						/* 1.客户编号 */
-						MyUtils.setExcelCellValue(cell, trackingLog.getCustomerNo());
-						break;
-					case 2:
-						/* 2.项目编号 */
+						/* 1.项目编号 */
 						MyUtils.setExcelCellValue(cell, trackingLog.getProjectNo());
 						break;
-					case 3:
-						/* 3.日期 */
+					case 2:
+						/* 2.日期 */
 						MyUtils.setExcelCellValue(cell, trackingLog.getCreateTime());
 						break;
-					case 4:
-						/* 4.标题 */
+					case 3:
+						/* 3.标题 */
 						MyUtils.setExcelCellValue(cell, trackingLog.getTitle());
 						break;
-					case 5:
-						/* 5.内容 */
+					case 4:
+						/* 4.内容 */
 						MyUtils.setExcelCellValue(cell, trackingLog.getContent());
 						break;
-					case 6:
-						/* 6.创建人openid */
+					case 5:
+						/* 5.创建人openid */
 						MyUtils.setExcelCellValue(cell, trackingLog.getFounderOpenid());
 						break;
-					case 7:
-						/* 7.创建人名字 */
+					case 6:
+						/* 6.创建人名字 */
 						MyUtils.setExcelCellValue(cell, trackingLog.getFounderName());
 						break;
-					case 8:
-						/* 8.创建人头像 */
+					case 7:
+						/* 7.创建人头像 */
 						MyUtils.setExcelCellValue(cell, trackingLog.getFounderImage());
 						break;
 					default:
@@ -173,42 +170,37 @@ public class TrackingLogServiceImpl implements ITrackingLogService {
 							trackingLog.setTrackingLogNo(cell.getStringCellValue());
 							break;
 						case 1:
-							/* 1.客户编号 */
-							cell.setCellType(CellType.STRING);
-							trackingLog.setCustomerNo(cell.getStringCellValue());
-							break;
-						case 2:
-							/* 2.项目编号 */
+							/* 1.项目编号 */
 							cell.setCellType(CellType.STRING);
 							trackingLog.setProjectNo(cell.getStringCellValue());
 							break;
-						case 3:
-							/* 3.日期 */
+						case 2:
+							/* 2.日期 */
 							cell.setCellType(CellType.STRING);
 							trackingLog.setCreateTime(MyUtils.parseExcelCell(cell));
 							break;
-						case 4:
-							/* 4.标题 */
+						case 3:
+							/* 3.标题 */
 							cell.setCellType(CellType.STRING);
 							trackingLog.setTitle(cell.getStringCellValue());
 							break;
-						case 5:
-							/* 5.内容 */
+						case 4:
+							/* 4.内容 */
 							cell.setCellType(CellType.STRING);
 							trackingLog.setContent(cell.getStringCellValue());
 							break;
-						case 6:
-							/* 6.创建人openid */
+						case 5:
+							/* 5.创建人openid */
 							cell.setCellType(CellType.STRING);
 							trackingLog.setFounderOpenid(cell.getStringCellValue());
 							break;
-						case 7:
-							/* 7.创建人名字 */
+						case 6:
+							/* 6.创建人名字 */
 							cell.setCellType(CellType.STRING);
 							trackingLog.setFounderName(cell.getStringCellValue());
 							break;
-						case 8:
-							/* 8.创建人头像 */
+						case 7:
+							/* 7.创建人头像 */
 							cell.setCellType(CellType.STRING);
 							trackingLog.setFounderImage(cell.getStringCellValue());
 							break;
@@ -224,6 +216,7 @@ public class TrackingLogServiceImpl implements ITrackingLogService {
 		}
 		return trackingLogs;
 	}
+
 	/**
 	 * 4.增加
 	 *
